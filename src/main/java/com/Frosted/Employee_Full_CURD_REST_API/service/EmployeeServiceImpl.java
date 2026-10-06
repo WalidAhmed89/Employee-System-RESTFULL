@@ -2,6 +2,7 @@ package com.Frosted.Employee_Full_CURD_REST_API.service;
 
 import com.Frosted.Employee_Full_CURD_REST_API.DataAccessObject.EmployeeDAO;
 import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employees;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,16 +26,14 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public void addEmployee(Employees employee) {
-        employeeDAO.addEmployee(employee);
+    @Transactional
+    public Employees save(Employees employee) {
+        return employeeDAO.save(employee);
     }
 
-    @Override
-    public void updateEmployee() {
-        employeeDAO.updateEmployee();
-    }
 
     @Override
+    @Transactional
     public void deleteEmployeeByID(int id) {
         employeeDAO.deleteEmployeeByID(id);
     }

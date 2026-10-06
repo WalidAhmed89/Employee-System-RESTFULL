@@ -33,19 +33,14 @@ public class EmployeeDAO_Impl implements EmployeeDAO {
 
     @Override
     @Transactional
-    public void addEmployee(Employees employee) {
-        entityManager.persist(employee);
+    public Employees save(Employees employee) {
+        return entityManager.merge(employee);
     }
 
-    @Override
-    @Transactional
-    public void updateEmployee() {
-
-    }
 
     @Override
-    @Transactional
     public void deleteEmployeeByID(int id) {
-
+        Employees theEmployee = entityManager.find(Employees.class,id);
+        entityManager.remove(theEmployee);
     }
 }
