@@ -1,40 +1,58 @@
 package com.Frosted.Employee_Full_CURD_REST_API.service;
 
 import com.Frosted.Employee_Full_CURD_REST_API.DataAccessObject.EmployeeDAO;
+import com.Frosted.Employee_Full_CURD_REST_API.DataJPA.EmployeeRepository;
 import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employees;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
-    private final EmployeeDAO employeeDAO;
+public class EmployeeServiceImpl implements EmployeeService {
+    // using Spring Data JPA
+    private final EmployeeRepository employeeRepository;
 
-    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
-    }
+
+    //using DAO
+//    private final EmployeeDAO employeeDAO;
+//
+//    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
+//        this.employeeDAO = employeeDAO;
+//    }
 
     @Override
     public List<Employees> findAllEmployees() {
-        return employeeDAO.findAllEmployees();
+        return employeeRepository.findAll();
     }
 
     @Override
     public Employees getEmployeeByID(int id) {
-        return employeeDAO.getEmployeeByID(id);
+        Optional<Employees> results = employeeRepository.findById(id);
+        Employees theEmployee = null;
+        if(results.isPresent()){
+            theEmployee =  results.get();
+        }else{
+            throw new RuntimeException("Did not find employee id - "+id);
+        }
+        return theEmployee;
     }
 
     @Override
-    @Transactional
+    //While using data jpa transaction will be managed by Spring Data JPA
+//  @Transactional
     public Employees save(Employees employee) {
-        return employeeDAO.save(employee);
+        return employeeRepository.save(employee);
     }
 
 
     @Override
-    @Transactional
+    //While using data jpa transaction will be managed by Spring Data JPA
+//  @Transactional
     public void deleteEmployeeByID(int id) {
-        employeeDAO.deleteEmployeeByID(id);
+        employeeRepository.deleteById(id);
     }
 }
