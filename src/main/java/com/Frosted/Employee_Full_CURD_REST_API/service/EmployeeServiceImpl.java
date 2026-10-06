@@ -1,9 +1,7 @@
 package com.Frosted.Employee_Full_CURD_REST_API.service;
 
-import com.Frosted.Employee_Full_CURD_REST_API.DataAccessObject.EmployeeDAO;
 import com.Frosted.Employee_Full_CURD_REST_API.DataJPA.EmployeeRepository;
-import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employees;
-import jakarta.transaction.Transactional;
+import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +23,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 //    }
 
     @Override
-    public List<Employees> findAllEmployees() {
+    public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
     }
 
     @Override
-    public Employees getEmployeeByID(int id) {
-        Optional<Employees> results = employeeRepository.findById(id);
-        Employees theEmployee = null;
+    public Employee getEmployeeByID(int id) {
+        Optional<Employee> results = employeeRepository.findById(id);
+        Employee theEmployee = null;
         if(results.isPresent()){
             theEmployee =  results.get();
         }else{
@@ -44,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     //While using data jpa transaction will be managed by Spring Data JPA
 //  @Transactional
-    public Employees save(Employees employee) {
+    public Employee save(Employee employee) {
         return employeeRepository.save(employee);
     }
 

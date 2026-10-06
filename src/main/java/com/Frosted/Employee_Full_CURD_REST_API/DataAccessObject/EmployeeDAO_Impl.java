@@ -1,6 +1,6 @@
 package com.Frosted.Employee_Full_CURD_REST_API.DataAccessObject;
 
-import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employees;
+import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -20,27 +20,27 @@ public class EmployeeDAO_Impl implements EmployeeDAO {
 
 
     @Override
-    public List<Employees> findAllEmployees() {
-        TypedQuery<Employees> theQuery = entityManager.createQuery("FROM Employees", Employees.class);
+    public List<Employee> findAllEmployees() {
+        TypedQuery<Employee> theQuery = entityManager.createQuery("FROM Employees", Employee.class);
 
         return theQuery.getResultList();
     }
 
     @Override
-    public Employees getEmployeeByID(int id) {
-        return entityManager.find(Employees.class, id);
+    public Employee getEmployeeByID(int id) {
+        return entityManager.find(Employee.class, id);
     }
 
     @Override
     @Transactional
-    public Employees save(Employees employee) {
+    public Employee save(Employee employee) {
         return entityManager.merge(employee);
     }
 
 
     @Override
     public void deleteEmployeeByID(int id) {
-        Employees theEmployee = entityManager.find(Employees.class,id);
+        Employee theEmployee = entityManager.find(Employee.class,id);
         entityManager.remove(theEmployee);
     }
 }

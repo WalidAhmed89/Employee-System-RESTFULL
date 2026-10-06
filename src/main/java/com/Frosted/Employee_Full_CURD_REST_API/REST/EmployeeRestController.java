@@ -1,7 +1,6 @@
 package com.Frosted.Employee_Full_CURD_REST_API.REST;
 
-import com.Frosted.Employee_Full_CURD_REST_API.DataAccessObject.EmployeeDAO;
-import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employees;
+import com.Frosted.Employee_Full_CURD_REST_API.Entity.Employee;
 import com.Frosted.Employee_Full_CURD_REST_API.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +16,13 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/employees")
-    public List<Employees> findAll() {
+    public List<Employee> findAll() {
         return employeeService.findAllEmployees();
     }
 
     @GetMapping("/employees/{employeeID}")
-    public Employees SearchForEmployeeByID(@PathVariable int employeeID) {
-        Employees theEmployee = employeeService.getEmployeeByID(employeeID);
+    public Employee SearchForEmployeeByID(@PathVariable int employeeID) {
+        Employee theEmployee = employeeService.getEmployeeByID(employeeID);
         if (theEmployee == null) {
             throw new RuntimeException("Employee id not found - " + employeeID);
         }
@@ -31,23 +30,23 @@ public class EmployeeRestController {
     }
 
     @PostMapping("/employees")
-    public Employees addEmployee(@RequestBody Employees theEmployee){
+    public Employee addEmployee(@RequestBody Employee theEmployee){
         theEmployee.setId(0);
 
-        Employees dbEmployee = employeeService.save(theEmployee);
+        Employee dbEmployee = employeeService.save(theEmployee);
         return dbEmployee;
     }
 
     @PutMapping("/employees")
-    public Employees updateEmployee(@RequestBody Employees theEmployee){
+    public Employee updateEmployee(@RequestBody Employee theEmployee){
 
-        Employees dbEmployee = employeeService.save(theEmployee);
+        Employee dbEmployee = employeeService.save(theEmployee);
         return dbEmployee;
     }
     @DeleteMapping("/employees/{employeeID}")
     public String deleteEmployee(@PathVariable int employeeID){
 
-        Employees theEmployee = employeeService.getEmployeeByID(employeeID);
+        Employee theEmployee = employeeService.getEmployeeByID(employeeID);
         if(theEmployee == null){
             throw new RuntimeException("Employee id not found - "+employeeID);
         }
